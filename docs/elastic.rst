@@ -71,11 +71,11 @@ Examples
 
 .. code-block:: yaml+jinja
 
-    
+
     - name: Elastic events
         hosts: localhost
         sources:
-        - cloin.eda.elastic:
+        - elasticsearch.eda.elastic:
             elastic_host: elasticsearch
             elastic_port: 9200
             elastic_username: elastic
@@ -100,5 +100,4 @@ Status
 Authors
 ~~~~~~~
 
-- Colin McNaughton (@cloin)
-
+- Colin McNaughton (@elasticsearch)

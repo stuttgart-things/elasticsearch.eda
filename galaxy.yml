@@ -1,8 +1,10 @@
-namespace: cloin
+namespace: elasticsearch
 name: eda
-version: 1.0.1
+version: 1.0.2
 readme: README.md
 authors:
+  - Christian Mueller
+  - Patrick Hermann
   - Colin McNaughton <@cloin>
 description: Event-Driven Ansible content
 license_file: 'LICENSE'
@@ -11,7 +13,7 @@ tags:
   - elasticsearch
   - infrastructure
 dependencies: {}
-repository: https://github.com/cloin/cloin.eda
-documentation: https://github.com/cloin/cloin.eda/tree/main/docs
-issues: https://github.com/cloin/cloin.eda/issues
+repository: https://github.com/stuttgart-things/elasticsearch.eda
+documentation: https://github.com/stuttgart-things/elasticsearch.eda/tree/main/docs
+issues: https://github.com/stuttgart-things/elasticsearch.eda/issues
 build_ignore: []

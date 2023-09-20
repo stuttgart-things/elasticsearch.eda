@@ -6,7 +6,7 @@ description:
     - Poll Elasticsearch API for matching log lines
     - Retrieves matching log lines based on query
     - Log lines are then placed on the queue for evaluation by ansible rulebooks to execute an action based on matching condition
-author: "Colin McNaughton (@cloin)"
+author: "Colin McNaughton (@elasticsearch)"
 options:
     elastic_host:
         description:
@@ -47,7 +47,7 @@ EXAMPLES = r'''
 - name: Elastic events
     hosts: localhost
     sources:
-    - cloin.eda.elastic:
+    - elasticsearch.eda.elastic:
         elastic_host: elasticsearch
         elastic_port: 9200
         elastic_username: elastic

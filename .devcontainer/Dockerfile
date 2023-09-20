@@ -9,4 +9,4 @@ RUN dnf --assumeyes install git java-17-openjdk python3-pip && \
 # Set the JAVA_HOME environment variable
 ENV JAVA_HOME /usr/lib/jvm/jre-17-openjdk
 
-RUN ansible-galaxy collection install ansible.eda cloin.eda
+RUN ansible-galaxy collection install ansible.eda elasticsearch.eda

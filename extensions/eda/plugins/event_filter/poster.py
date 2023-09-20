@@ -3,13 +3,13 @@ import logging
 
 def main(event: dict, webhook_url: str = None) -> dict:
     """
-    Perform an HTTP POST request to the specified webhook receiver URL with the 
+    Perform an HTTP POST request to the specified webhook receiver URL with the
     event dictionary as the JSON body, log the response, and return the event.
     The dictionary is only sent if the webhook_url is provided.
 
     THIS IS ONLY MEANT TO ASSIST IN DEV. I use this to better understand the
     event structure so that I can write rule conditions easier
-    
+
     Parameters
     ----------
     event : dict
@@ -17,7 +17,7 @@ def main(event: dict, webhook_url: str = None) -> dict:
     webhook_url : str, optional
         The URL of the webhook receiver. If not provided, the event is not sent
         and is simply returned.
-    
+
     Returns
     -------
     dict
@@ -33,9 +33,9 @@ def main(event: dict, webhook_url: str = None) -> dict:
            host: 0.0.0.0
            port: 5000
          filters:
-           - cloin.eda.poster:
+           - elasticsearch.eda.poster:
                webhook_url: https://webhook.site/asdfa2q3423-sadf-449231-asd-88f81e0asdf65d33
-            
+
     """
     if not webhook_url:
         logging.info("Webhook URL not defined. The event dictionary will not be sent.")
