@@ -1,0 +1,34 @@
+---
+version: 3
+vars:
+  PROJECT_NAME:
+    sh: echo ${PWD##*/}
+  DATE:
+    sh: date +"%y.%m%d.%H%M"
+  GIT_COMMIT:
+    sh: git log -n 1 --format=%h
+  UPDATED_TAG:
+    sh: old_tag=$(git describe --tags --abbrev=0 | cut -d "." -f3 | cut -d "-" -f1); new_tag=$((old_tag+1)); echo $new_tag
+  UPDATED_TAG_VERSION:
+    sh: t1=$(git describe --tags --abbrev=0 | cut -f1 -d'.'); t2=$(git describe --tags --abbrev=0 | cut -f2 -d'.'); echo $t1.$t2.{{ .UPDATED_TAG }}
+  BRANCH:
+    sh: if [ $(git rev-parse --abbrev-ref HEAD) != "main" ]; then echo -$(git rev-parse --abbrev-ref HEAD) ; fi
+
+tasks:
+
+  tag:
+    desc: Commit, push & tag the module
+    cmds:
+      - task: git-push
+      - git pull --tags
+      - git tag -a {{ .UPDATED_TAG_VERSION }}{{ .BRANCH }} -m 'updated for stuttgart-things {{ .DATE }} for tag version {{ .UPDATED_TAG_VERSION }}{{ .BRANCH }}'
+      - git push origin --tags
+
+  git-push:
+    desc: Commit & push the module
+    cmds:
+      - git pull
+      - git config advice.addIgnoredFile false
+      - git add *
+      - git commit -am 'updated {{ .PROJECT_NAME }} {{ .DATE }} for tag version {{ .UPDATED_TAG_VERSION }}{{ .BRANCH }}'
+      - git push
