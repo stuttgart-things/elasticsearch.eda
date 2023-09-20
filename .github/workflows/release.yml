@@ -1,5 +1,4 @@
 name: Release Ansible Collection
-
 on:
   push:
     tags:
