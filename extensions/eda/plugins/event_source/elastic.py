@@ -58,25 +58,26 @@ EXAMPLES = r'''
             container.name.keyword: nginx
         interval: 5
 '''
-
 import asyncio
 from datetime import datetime
 from elasticsearch import AsyncElasticsearch
 from dateutil.parser import parse
 from typing import Any, Dict
-import yaml
+import json
 
 
 async def main(queue: asyncio.Queue, args: Dict[str, Any]):
-    elastic_host = args.get("elastic_host", "localhost")
+    elastic_host = args.get("elastic_host", "vsphere-mon.labul.sva.de")
     elastic_port = args.get("elastic_port", 9200)
     elastic_username = args.get("elastic_username", "elastic")
     elastic_password = args.get("elastic_password", "elastic!")
-    elastic_index_pattern = args.get("elastic_index_pattern", "filebeat-*")
+    elastic_index_pattern = args.get("elastic_index_pattern", "metricbeat-*")
+    json_string = args.get("json_string")
     interval = args.get("interval", 5)
-    query = args.get("query", "term:\n  container.name.keyword: nginx")
 
-    elastic_query = yaml.safe_load(query)
+    elastic_query = json.loads(json_string)
+
+    print(elastic_query)
 
     async with AsyncElasticsearch(f"http://{elastic_host}:{elastic_port}", basic_auth=(elastic_username, elastic_password)) as es:
         # Set the initial search_after value to the current timestamp
@@ -90,6 +91,7 @@ async def main(queue: asyncio.Queue, args: Dict[str, Any]):
                     }
                 }
             ]
+            size = 1
 
             # Run the query
             response = await es.search(
@@ -97,7 +99,7 @@ async def main(queue: asyncio.Queue, args: Dict[str, Any]):
                 query=elastic_query,
                 sort=sort,
                 search_after=[search_after.isoformat()],
-                size=1000
+                size=1
             )
 
             # Process the results
