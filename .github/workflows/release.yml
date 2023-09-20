@@ -59,25 +59,25 @@ jobs:
         echo "NAMESPACE=$(yq eval '.namespace' galaxy.yml)" >> $GITHUB_ENV
         echo "COLLECTION=$(yq eval '.name' galaxy.yml)" >> $GITHUB_ENV
 
-    - name: Create GitHub Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.NEW_VERSION }}
-        release_name: Release ${{ env.NEW_VERSION }}
+#    - name: Create GitHub Release
+#      id: create_release
+#      uses: actions/create-release@v1
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      with:
+#        tag_name: ${{ env.NEW_VERSION }}
+#        release_name: Release ${{ env.NEW_VERSION }}
 
-    - name: Upload Collection to GitHub Release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./${{ env.NAMESPACE }}-${{ env.COLLECTION }}-${{ env.NEW_VERSION }}.tar.gz
-        asset_name: ${{ env.NAMESPACE }}-${{ env.COLLECTION }}-${{ env.NEW_VERSION }}.tar.gz
-        asset_content_type: application/gzip
+#    - name: Upload Collection to GitHub Release
+#      uses: actions/upload-release-asset@v1
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      with:
+#        upload_url: ${{ steps.create_release.outputs.upload_url }}
+#        asset_path: ./${{ env.NAMESPACE }}-${{ env.COLLECTION }}-${{ env.NEW_VERSION }}.tar.gz
+#        asset_name: ${{ env.NAMESPACE }}-${{ env.COLLECTION }}-${{ env.NEW_VERSION }}.tar.gz
+#        asset_content_type: application/gzip
 
-    - name: Publish to Ansible Galaxy
-      id: publish_to_galaxy
-      run: ansible-galaxy collection publish ./$NAMESPACE-$COLLECTION-$NEW_VERSION.tar.gz --api-key=${{ secrets.ANSIBLE_GALAXY_API_KEY }}
+  #  - name: Publish to Ansible Galaxy
+  #    id: publish_to_galaxy
+  #    run: ansible-galaxy collection publish ./$NAMESPACE-$COLLECTION-$NEW_VERSION.tar.gz --api-key=${{ secrets.ANSIBLE_GALAXY_API_KEY }}
