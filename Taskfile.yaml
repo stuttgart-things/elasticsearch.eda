@@ -15,7 +15,6 @@ vars:
     sh: if [ $(git rev-parse --abbrev-ref HEAD) != "main" ]; then echo -$(git rev-parse --abbrev-ref HEAD) ; fi
 
 tasks:
-
   tag:
     desc: Commit, push & tag the module
     cmds:
@@ -32,3 +31,6 @@ tasks:
       - git add *
       - git commit -am 'updated {{ .PROJECT_NAME }} {{ .DATE }} for tag version {{ .UPDATED_TAG_VERSION }}{{ .BRANCH }}'
       - git push
+    preconditions:
+      - sh: '[ 1 = 0 ]'
+        msg: "One doesn't equal Zero, Halting"
