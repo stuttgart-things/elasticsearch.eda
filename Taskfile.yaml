@@ -15,8 +15,15 @@ vars:
     sh: if [ $(git rev-parse --abbrev-ref HEAD) != "main" ]; then echo -$(git rev-parse --abbrev-ref HEAD) ; fi
 
 tasks:
+
+  verify-workflow:
+    desc: Commit, push & tag the module
+    cmds:
+      - yq .github/workflows/*.yml
+
   tag:
     desc: Commit, push & tag the module
+    deps: [verify-workflow]
     cmds:
       - task: git-push
       - git pull --tags
